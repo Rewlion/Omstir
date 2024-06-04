@@ -30,4 +30,7 @@ private:
     ref<Scene> mpScene;
     ref<RtBindingTable> mpBindingTable;
     ref<RtProgramVars> mpVars;
+    ref<SampleGenerator> mpSampleGenerator;
+    uint mMaxBounces;
+    bool mOptionsChanged;
 };

@@ -1,6 +1,7 @@
 #include "RefPathTracer.h"
 #include "Core/Program/ProgramVars.h"
 #include "Core/Program/RtBindingTable.h"
+#include "RenderGraph/RenderPassStandardFlags.h"
 
 extern "C" FALCOR_API_EXPORT void registerPlugin(Falcor::PluginRegistry& registry)
 {
@@ -12,12 +13,14 @@ namespace
     const char kShaderFile[] = "RenderPasses/RefPathTracer/RefPathTracer.rt.slang";
     // Ray tracing settings that affect the traversal stack size.
     // These should be set as small as possible.
-    const uint32_t kMaxPayloadSizeBytes = 16u;
-    const uint32_t kMaxRecursionDepth = 2u;
+    const uint32_t kMaxPayloadSizeBytes = 40u;
+    const uint32_t kMaxRecursionDepth = 6u;
 }
 
 RefPathTracer::RefPathTracer(ref<Device> pDevice, const Properties& props)
     : RenderPass(pDevice)
+    , mMaxBounces(3)
+    , mOptionsChanged(false)
 {
 }
 
@@ -47,6 +50,15 @@ void RefPathTracer::execute(RenderContext* pRenderContext, const RenderData& ren
         return;
     }
 
+    // Update refresh flag if options that affect the output have changed.
+    auto& dict = renderData.getDictionary();
+    if (mOptionsChanged)
+    {
+        auto flags = dict.getValue(kRenderPassRefreshFlags, RenderPassRefreshFlags::None);
+        dict[Falcor::kRenderPassRefreshFlags] = flags | Falcor::RenderPassRefreshFlags::RenderOptionsChanged;
+        mOptionsChanged = false;
+    }
+
     if (!mpProgram)
     {
 
@@ -74,6 +86,13 @@ void RefPathTracer::execute(RenderContext* pRenderContext, const RenderData& ren
         mpProgram->setTypeConformances(mpScene->getTypeConformances());
 
         mpVars = RtProgramVars::create(mpDevice, mpProgram, sbt);
+
+        // Create a sample generator.
+        mpSampleGenerator = SampleGenerator::create(mpDevice, SAMPLE_GENERATOR_UNIFORM);
+        mpProgram->addDefines(mpSampleGenerator->getDefines());
+        ShaderVar var = mpVars->getRootVar();
+        mpSampleGenerator->bindShaderData(var);
+        mpProgram->addDefine("SAMPLE_GENERATOR_TYPE", "SAMPLE_GENERATOR_UNIFORM");
     }
 
     if (is_set(mpScene->getUpdates(), Scene::UpdateFlags::RecompileNeeded) ||
@@ -86,6 +105,7 @@ void RefPathTracer::execute(RenderContext* pRenderContext, const RenderData& ren
 
     static uint frameCount = 0;
     var["CB"]["gFrameCount"] = frameCount++;
+    var["CB"]["gMaxBounces"] = mMaxBounces;
     var["gOutputColor"] = renderData.getTexture("output");
 
      // Get dimensions of ray dispatch.
@@ -103,4 +123,8 @@ void RefPathTracer::setScene(RenderContext* pRenderContext, const ref<Scene>& pS
     mpVars = nullptr;
 }
 
-void RefPathTracer::renderUI(Gui::Widgets& widget) {}
+void RefPathTracer::renderUI(Gui::Widgets& widget)
+{
+    mOptionsChanged = false;
+    mOptionsChanged |= widget.var("Max bounces", mMaxBounces, 0u, 12u);
+}
