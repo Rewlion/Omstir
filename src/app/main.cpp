@@ -12,5 +12,6 @@ void close()
 
 int main()
 {
+  init();
   loginfo("hw");
 }

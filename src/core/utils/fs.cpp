@@ -15,7 +15,7 @@ namespace Utils
     
     if (ec)
     {
-      logerror("failed to open the file {}: {}", file, ec.message());
+      logerr("failed to open the file {}: {}", file, ec.message());
       return {};
     }
 
@@ -24,7 +24,7 @@ namespace Utils
     f.open(file, std::ios::binary);
     if (!f.is_open())
     {
-      logerror("failed to open the file {}", file);
+      logerr("failed to open the file {}", file);
       return {};
     }
 
@@ -42,7 +42,7 @@ namespace Utils
     f.open(file);
     if (!f.is_open())
     {
-      logerror("failed to open the file {}", file);
+      logerr("failed to open the file {}", file);
       return {};
     }
 

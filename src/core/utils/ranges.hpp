@@ -4,7 +4,7 @@
 
 #include <ranges>
 
-namespace Utils
+namespace ranges
 {
   inline
   auto enumerate_substrings(const string_view str, string_view delim)

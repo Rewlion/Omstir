@@ -11,6 +11,7 @@ include_directories(
   "${CMAKE_SOURCE_DIR}/src/"
   "${CMAKE_SOURCE_DIR}/deps/glm/include"
   "${CMAKE_SOURCE_DIR}/deps/spdlog/include"
+  "${CMAKE_SOURCE_DIR}/deps/xxHash/include"
 )
 
 add_subdirectory("${CMAKE_SOURCE_DIR}/src")

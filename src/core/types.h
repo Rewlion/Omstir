@@ -22,3 +22,5 @@ using float4x4 = mat4;
 using string = std::string;
 using wstring = std::wstring;
 using string_view = std::string_view;
+
+using string_hash = uint64_t;
