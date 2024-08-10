@@ -1,7 +1,10 @@
 cmake_minimum_required(VERSION 3.21)
 
-set(CORE_SRC
+add_library(core
+  "${CMAKE_SOURCE_DIR}/src/core/assert.cpp"
   "${CMAKE_SOURCE_DIR}/src/core/log.cpp"
 )
 
-add_library(core ${CORE_SRC})
+target_link_libraries(
+  core
+)
