@@ -7,4 +7,9 @@ project(Not_this_again VERSION 0.2
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
+include_directories(
+  "${CMAKE_SOURCE_DIR}/src"
+  "${CMAKE_SOURCE_DIR}/deps/spdlog/include"
+)
+
 add_subdirectory("${CMAKE_SOURCE_DIR}/src")
