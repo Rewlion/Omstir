@@ -8,7 +8,7 @@ set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 include_directories(
-  "${CMAKE_SOURCE_DIR}/src"
+  "${CMAKE_SOURCE_DIR}/src/"
   "${CMAKE_SOURCE_DIR}/deps/glm/include"
   "${CMAKE_SOURCE_DIR}/deps/spdlog/include"
 )

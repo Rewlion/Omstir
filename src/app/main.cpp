@@ -1,4 +1,4 @@
-#include <log.h>
+#include <core/log.h>
 
 void init()
 {
@@ -12,6 +12,5 @@ void close()
 
 int main()
 {
-  
   loginfo("hw");
 }
