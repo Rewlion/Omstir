@@ -1,4 +1,0 @@
-[submodule "Falcor"]
-	path = Falcor
-	url = https://github.com/NVIDIAGameWorks/Falcor
-	ignore = dirty
