@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.21)
 
 add_subdirectory("${CMAKE_SOURCE_DIR}/src/core/data")
+add_subdirectory("${CMAKE_SOURCE_DIR}/src/core/input")
 add_subdirectory("${CMAKE_SOURCE_DIR}/src/core/utils")
 add_subdirectory("${CMAKE_SOURCE_DIR}/src/core/vfs")
 
@@ -17,6 +18,7 @@ add_library(core STATIC
 target_link_libraries(
   core
   core_ed
+  core_input
   core_utils
   core_vfs
 
