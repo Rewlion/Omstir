@@ -10,6 +10,7 @@ add_library(core STATIC
   "${CMAKE_SOURCE_DIR}/src/core/assert.cpp"
   "${CMAKE_SOURCE_DIR}/src/core/log.cpp"
   "${CMAKE_SOURCE_DIR}/src/core/settings.cpp"
+  "${CMAKE_SOURCE_DIR}/src/core/time.cpp"
   "${CMAKE_SOURCE_DIR}/src/core/window.cpp"
 )
 
