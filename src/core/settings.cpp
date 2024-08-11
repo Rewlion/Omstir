@@ -4,7 +4,7 @@
 #include <core/data/utils.h>
 #include <core/log.h>
 
-namespace Engine
+namespace settings
 {
   static ed::Scope SETTINGS_DATA;
 
