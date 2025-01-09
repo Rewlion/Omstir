@@ -12,11 +12,19 @@ if errorlevel 1 (
     git submodule update --init --recursive
 )
 
-echo Running deps setup...
-call %~dp0\deps\setup.bat
+echo Creating a symbolic links to the folders...
+mklink /D %~dp0\Falcor\Source\RenderPasses\Omstir %~dp0\RenderPasses
+mklink /D %~dp0\Falcor\scripts\Omstir %~dp0\scripts
 if errorlevel 1 goto error
 
+echo Adding a new cmake subdirectory...
+echo add_subdirectory(Omstir)>> %~dp0\Falcor\Source\RenderPasses\CMakeLists.txt
+
+echo Running Falcor setup...
+%~dp0\Falcor\setup.bat
+
 echo Setup is done.
+
 exit /b 0
 
 :error
