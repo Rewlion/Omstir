@@ -12,16 +12,9 @@ if errorlevel 1 (
     git submodule update --init --recursive
 )
 
-echo Creating a symbolic links to the folders...
-mklink /D %~dp0\Falcor\Source\RenderPasses\Omstir %~dp0\RenderPasses
-mklink /D %~dp0\Falcor\scripts\Omstir %~dp0\scripts
+echo Creating a symbolic links between the Capsacin folders and Omstir...
+%~dp0\link_folders.bat
 if errorlevel 1 goto error
-
-echo Adding a new cmake subdirectory...
-echo add_subdirectory(Omstir)>> %~dp0\Falcor\Source\RenderPasses\CMakeLists.txt
-
-echo Running Falcor setup...
-%~dp0\Falcor\setup.bat
 
 echo Setup is done.
 

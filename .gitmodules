@@ -1,4 +1,3 @@
-[submodule "Falcor"]
-	path = Falcor
-	url = https://github.com/NVIDIAGameWorks/Falcor
-	ignore = dirty
+[submodule "Capsaicin"]
+	path = Capsaicin
+	url = https://github.com/GPUOpen-LibrariesAndSDKs/Capsaicin
